@@ -28,7 +28,7 @@ public class CreateUserActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.password);
         passwordHint = (EditText) findViewById(R.id.passwordHint);
 
-        signUp.setOnClickListener(new View.OnClickListener() {
+        /*signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DatabaseReference userRef = database.getReference("User");
@@ -40,6 +40,6 @@ public class CreateUserActivity extends AppCompatActivity {
                 DatabaseReference userNameRef = userRef.child(newUser);
                 userNameRef.setValue(newPassword);
             }
-        });
+        });*/
     }
 }
