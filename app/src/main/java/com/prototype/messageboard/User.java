@@ -2,9 +2,13 @@ package com.prototype.messageboard;
 
 public class User {
 
-    private String userName;
+    public String userName;
     private String password;
     private String passwordHint;
+
+    public User(){
+
+    }
 
     public User(String userName){
         this.userName=userName;
