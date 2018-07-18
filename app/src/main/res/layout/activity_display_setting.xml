@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="1dp"
+    android:paddingRight="1dp"
+    android:paddingTop="100dp"
+    tools:context=".DisplaySettingActivity"
+    android:background="?attr/backgroundcolor"
+    android:id="@+id/display_settings"
+    >
+
+    <TextView
+        android:id="@+id/displayIntensityText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Display Intensity:"
+        android:textSize="20sp"
+        android:layout_marginLeft="40dp"
+        android:textStyle="bold"
+        android:textColor="?attr/textcolor"/>
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/displayIntensityText"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="8dp"
+        android:max="100"
+        android:onClick="onSeekBarChange"
+        android:progress="50"
+        android:progressDrawable="@drawable/seek_bar"
+        android:splitTrack="false"
+        android:thumb="@drawable/seek_thumb" />
+
+    <ImageView
+        android:id="@+id/brightImg1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="41dp"
+        app:srcCompat="@drawable/bright" />
+
+    <ImageView
+        android:id="@+id/brightImg2"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="273dp"
+        android:layout_marginLeft="273dp"
+        android:layout_marginTop="33dp"
+        app:srcCompat="@drawable/bright" />
+
+    <TextView
+        android:id="@+id/displayDurationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/seekBar"
+        android:text="Display Duration:"
+        android:textSize="20sp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:textColor="?attr/textcolor"/>
+
+    <SeekBar
+        android:id="@+id/seekBar2"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/displayDurationText"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="30dp"
+        android:splitTrack="false"
+        android:progressDrawable="@drawable/seek_bar"
+        android:thumb="@drawable/seek_thumb"
+        android:max="10"
+        android:onClick="onSeekBarChange2"
+        android:progress="5" />
+
+    <TextView
+        android:id="@+id/timeImg1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1 s"
+        android:textSize="14sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="143dp"
+        android:textStyle="bold"
+        android:textColor="?attr/textcolor"/>
+
+    <TextView
+        android:id="@+id/timeImg2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10 s"
+        android:textSize="14sp"
+        android:layout_marginStart="280dp"
+        android:layout_marginLeft="280dp"
+        android:layout_marginTop="141dp"
+        android:textStyle="bold"
+        android:textColor="?attr/textcolor"/>
+
+    <TextView
+        android:id="@+id/enableNightText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/seekBar2"
+        android:text="Enable Night Mode:"
+        android:textSize="20sp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:textColor="?attr/textcolor"/>
+
+    <Switch
+        android:id="@+id/myswitch"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="250dp"
+        android:layout_marginStart="250dp"
+        android:layout_marginTop="183dp"
+        android:scaleX="1.6"
+        android:scaleY="1.6"
+        android:textColor="?attr/textcolor"/>
+
+    <TextView
+        android:id="@+id/valueTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="210dp"
+        android:text="50"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="?attr/textcolor"/>
+
+    <TextView
+        android:id="@+id/valueTxtSign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="250dp"
+        android:text="%"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="?attr/textcolor"/>
+
+    <TextView
+        android:id="@+id/valueTxt2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="95dp"
+        android:text="5"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="?attr/textcolor"/>
+
+    <TextView
+        android:id="@+id/valueTxt2Sign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="250dp"
+        android:layout_marginTop="95dp"
+        android:text="s"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="?attr/textcolor"/>
+
+
+</RelativeLayout>

@@ -35,5 +35,7 @@ dependencies {
     //circle image view
     implementation files('libs/CircleImageView-master/gradle/wrapper/gradle-wrapper.jar')
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    //cicular floating action button
+    implementation 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
 }
 apply plugin: 'com.google.gms.google-services'
