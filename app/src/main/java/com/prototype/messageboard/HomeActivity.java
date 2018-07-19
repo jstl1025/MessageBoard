@@ -18,18 +18,28 @@ import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
-public class HomeActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class HomeActivity extends AppCompatActivity implements FloatingActionMenu.MenuStateChangeListener{
 
     private de.hdodenhof.circleimageview.CircleImageView profile;
+    private ArrayList<FloatingActionMenu> menus;
+    private FloatingActionMenu currentMenu;
+    int[] imgIds = {R.id.imageButton1,
+                    R.id.imageButton2,
+                    R.id.imageButton3,
+                    R.id.imageButton4,
+                    R.id.imageButton5,
+                    R.id.imageButton6};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if(DisplaySettingActivity.switch_on_tf == 1){
+        /*if(DisplaySettingActivity.switch_on_tf == 1){
             setTheme(R.style.darktheme);
         }
         else{
             setTheme(R.style.AppTheme);
-        }
+        }*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
@@ -42,60 +52,39 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton img1 = (ImageButton) findViewById(R.id.imageButton1);
+        menus = new ArrayList<FloatingActionMenu>();
 
+        for (int i=0; i<6; i++){
+            ImageButton img = findViewById(imgIds[i]);
+            TextView custom_txt = new TextView(this); custom_txt.setText("Text"); custom_txt.setBackgroundResource(android.R.drawable.btn_default_small);
+            TextView custom_img = new TextView(this); custom_img.setText("Image"); custom_img.setBackgroundResource(android.R.drawable.btn_default_small);
+            TextView custom_def = new TextView(this); custom_def.setText("Default"); custom_def.setBackgroundResource(android.R.drawable.btn_default_small);
+            custom_txt.setBackgroundResource(R.drawable.rounded_textview);
+            custom_txt.setGravity(Gravity.CENTER);
+            custom_img.setBackgroundResource(R.drawable.rounded_textview);
+            custom_img.setGravity(Gravity.CENTER);
+            custom_def.setBackgroundResource(R.drawable.rounded_textview);
+            custom_def.setGravity(Gravity.CENTER);
 
-        TextView custom_txt = new TextView(this); custom_txt.setText("Text"); custom_txt.setBackgroundResource(android.R.drawable.btn_default_small);
-        TextView custom_img = new TextView(this); custom_img.setText("Image"); custom_img.setBackgroundResource(android.R.drawable.btn_default_small);
-        TextView custom_def = new TextView(this); custom_def.setText("Default"); custom_def.setBackgroundResource(android.R.drawable.btn_default_small);
-        custom_txt.setBackgroundResource(R.drawable.rounded_textview);
-        custom_txt.setGravity(Gravity.CENTER);
-        custom_img.setBackgroundResource(R.drawable.rounded_textview);
-        custom_img.setGravity(Gravity.CENTER);
-        custom_def.setBackgroundResource(R.drawable.rounded_textview);
-        custom_def.setGravity(Gravity.CENTER);
+            FrameLayout.LayoutParams tvParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+            custom_txt.setLayoutParams(tvParams);
+            custom_img.setLayoutParams(tvParams);
+            custom_def.setLayoutParams(tvParams);
+            SubActionButton.Builder subBuilder = new SubActionButton.Builder(this);
 
-        ImageButton img2 = (ImageButton) findViewById(R.id.imageButton2);
-        TextView custom_txt2 = new TextView(this); custom_txt2.setText("Text"); custom_txt2.setBackgroundResource(android.R.drawable.btn_default_small);
-        TextView custom_img2 = new TextView(this); custom_img2.setText("Image"); custom_img2.setBackgroundResource(android.R.drawable.btn_default_small);
-        TextView custom_def2 = new TextView(this); custom_def2.setText("Default"); custom_def2.setBackgroundResource(android.R.drawable.btn_default_small);
-        custom_txt2.setBackgroundResource(R.drawable.rounded_textview);
-        custom_txt2.setGravity(Gravity.CENTER);
-        custom_img2.setBackgroundResource(R.drawable.rounded_textview);
-        custom_img2.setGravity(Gravity.CENTER);
-        custom_def2.setBackgroundResource(R.drawable.rounded_textview);
-        custom_def2.setGravity(Gravity.CENTER);
+            FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
+                    .setStartAngle(-50)
+                    .setEndAngle(50)
+                    .setRadius(getResources().getDimensionPixelSize(R.dimen.radius_large))
+                    .addSubActionView(custom_txt)
+                    .addSubActionView(custom_img)
+                    .addSubActionView(custom_def)
+                    .setStateChangeListener(this)
+                    .attachTo(img)
+                    .build();
 
-        FrameLayout.LayoutParams tvParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        custom_txt.setLayoutParams(tvParams);
-        custom_img.setLayoutParams(tvParams);
-        custom_def.setLayoutParams(tvParams);
-
-        custom_txt2.setLayoutParams(tvParams);
-        custom_img2.setLayoutParams(tvParams);
-        custom_def2.setLayoutParams(tvParams);
-        SubActionButton.Builder subBuilder = new SubActionButton.Builder(this);
-
-
-        FloatingActionMenu actionMenu1 = new FloatingActionMenu.Builder(this)
-                .setStartAngle(-50)
-                .setEndAngle(50)
-                .setRadius(getResources().getDimensionPixelSize(R.dimen.radius_large))
-                .addSubActionView(custom_txt)
-                .addSubActionView(custom_img)
-                .addSubActionView(custom_def)
-                .attachTo(img1)
-                .build();
-
-        FloatingActionMenu actionMenu2 = new FloatingActionMenu.Builder(this)
-                .setStartAngle(-50)
-                .setEndAngle(50)
-                .setRadius(getResources().getDimensionPixelSize(R.dimen.radius_large))
-                .addSubActionView(custom_txt2)
-                .addSubActionView(custom_img2)
-                .addSubActionView(custom_def2)
-                .attachTo(img2)
-                .build();
+            menus.add(actionMenu);
+        }
 
     }
 
@@ -120,4 +109,21 @@ public class HomeActivity extends AppCompatActivity {
 
         }
     }
+
+    @Override
+    public void onMenuOpened(FloatingActionMenu menu){
+        // Only allow one menu to stay open
+        for(FloatingActionMenu iMenu : menus){
+            iMenu.close(true);
+        }
+        // update current menu reference
+        currentMenu=menu;
+    }
+
+    @Override
+    public void onMenuClosed(FloatingActionMenu menu) {
+        // remove current menu reference
+        currentMenu = null;
+    }
+
 }
