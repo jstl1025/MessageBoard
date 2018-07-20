@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Settings, should always be in the overflow -->
+    <item android:id="@+id/profile"
+        android:title="Profile"
+        android:icon="@drawable/baseline_perm_identity_black_36"
+        />
+
+    <item android:id="@+id/display_settings"
+        android:title="Display Settings"
+        android:icon="@drawable/baseline_settings_black_36"
+        />
+
+    <item android:id="@+id/custom"
+        android:title="Customize"
+        android:icon="@drawable/baseline_create_black_36"
+        />
+
+    <item android:id="@+id/info"
+        android:title="Info"
+        android:icon="@drawable/baseline_info_black_36"
+        />
+</menu>

@@ -17,10 +17,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".CreateUserActivity" />
-        <activity android:name=".HomeActivity" />
+        <activity android:name=".CustomizeActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".DisplaySettingActivity" />
-        <activity android:name=".CustomizeImg"></activity>
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".ThemeChangeActivity" />
     </application>
 
 </manifest>

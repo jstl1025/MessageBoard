@@ -2,6 +2,7 @@ package com.prototype.messageboard;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,7 +24,7 @@ public class DisplaySettingActivity extends AppCompatActivity {
             setTheme(R.style.darktheme);
             /*ConstraintLayout homeActivity = (ConstraintLayout) findViewById(R.id.homeLayout);
             homeActivity.setTheme(R.style.darktheme);*/
-            /*Resources.Theme theme = HomeActivity.getTheme();
+            /*Resources.Theme theme = activity_customize.getTheme();
             theme.applyStyle(R.style.darktheme,true);*/
         }
         else{
@@ -31,7 +32,7 @@ public class DisplaySettingActivity extends AppCompatActivity {
         }
 
         super.onCreate(savedInstanceState);
-        /*setContentView(R.layout.activity_display_setting);*/
+        setContentView(R.layout.activity_display_setting);
 
         // night theme set my toggle switch
         myswitch = (Switch) findViewById(R.id.myswitch);
@@ -43,7 +44,6 @@ public class DisplaySettingActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked){
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
                     DisplaySettingActivity.this.recreate();
                 }
                 else{
