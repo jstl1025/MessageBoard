@@ -1,5 +1,6 @@
 package com.prototype.messageboard;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
@@ -7,12 +8,14 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
-public class DisplaySettingActivity extends AppCompatActivity {
+public class DisplaySettingActivity extends NavigationDrawer {
     SeekBar sb, sb2;
     TextView valueTxt, valueTxt2;
     Switch myswitch;
@@ -32,7 +35,11 @@ public class DisplaySettingActivity extends AppCompatActivity {
         }
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display_setting);
+        //setContentView(R.layout.activity_display_setting);
+        LayoutInflater inflater = (LayoutInflater) this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View contentView = inflater.inflate(R.layout.activity_display_setting, null, false);
+        mDrawerLayout.addView(contentView, 0);
 
         // night theme set my toggle switch
         myswitch = (Switch) findViewById(R.id.myswitch);

@@ -1,10 +1,12 @@
 package com.prototype.messageboard;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,7 +20,7 @@ import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import java.util.ArrayList;
 
-public class CustomizeActivity extends AppCompatActivity implements FloatingActionMenu.MenuStateChangeListener{
+public class CustomizeActivity extends NavigationDrawer implements FloatingActionMenu.MenuStateChangeListener{
 
     private ArrayList<FloatingActionMenu> menus;
     private FloatingActionMenu currentMenu;
@@ -38,7 +40,11 @@ public class CustomizeActivity extends AppCompatActivity implements FloatingActi
             setTheme(R.style.AppTheme);
         }
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customize);
+        //setContentView(R.layout.activity_customize);
+        LayoutInflater inflater = (LayoutInflater) this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View contentView = inflater.inflate(R.layout.activity_customize, null, false);
+        mDrawerLayout.addView(contentView, 0);
 
         menus = new ArrayList<FloatingActionMenu>();
 
