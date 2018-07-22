@@ -19,16 +19,11 @@ public class DisplaySettingActivity extends NavigationDrawer {
     SeekBar sb, sb2;
     TextView valueTxt, valueTxt2;
     Switch myswitch;
-    public static int switch_on_tf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // sets night theme defined in styles
         if(AppCompatDelegate.getDefaultNightMode()== AppCompatDelegate.MODE_NIGHT_YES){
             setTheme(R.style.darktheme);
-            /*ConstraintLayout homeActivity = (ConstraintLayout) findViewById(R.id.homeLayout);
-            homeActivity.setTheme(R.style.darktheme);*/
-            /*Resources.Theme theme = activity_customize.getTheme();
-            theme.applyStyle(R.style.darktheme,true);*/
         }
         else{
             setTheme(R.style.AppTheme);
