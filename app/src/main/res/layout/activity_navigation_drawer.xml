@@ -8,6 +8,15 @@
     tools:context=".NavigationDrawer"
     android:background="?attr/backgroundcolor">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/nav_action" />
+
+    </LinearLayout>
+
     <!-- Container for contents of drawer - use NavigationView to make configuration easier -->
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
