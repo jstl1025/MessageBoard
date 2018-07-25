@@ -13,14 +13,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import java.util.ArrayList;
 
-public class CustomizeActivity extends NavigationDrawer implements FloatingActionMenu.MenuStateChangeListener{
+public class CustomizeActivity extends NavigationDrawer implements FloatingActionMenu.MenuStateChangeListener, View.OnClickListener{
 
     private ArrayList<FloatingActionMenu> menus;
     private FloatingActionMenu currentMenu;
@@ -30,6 +32,7 @@ public class CustomizeActivity extends NavigationDrawer implements FloatingActio
                     R.id.imageButton4,
                     R.id.imageButton5,
                     R.id.imageButton6};
+    private CustomizeTxtPopup customizeTxtPopup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,15 +47,16 @@ public class CustomizeActivity extends NavigationDrawer implements FloatingActio
         LayoutInflater inflater = (LayoutInflater) this
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View contentView = inflater.inflate(R.layout.activity_customize, null, false);
+        customizeTxtPopup = new CustomizeTxtPopup(this);
         mDrawerLayout.addView(contentView, 0);
 
         menus = new ArrayList<FloatingActionMenu>();
 
         for (int i=0; i<6; i++){
             ImageButton img = findViewById(imgIds[i]);
-            TextView custom_txt = new TextView(this); custom_txt.setText("Text"); custom_txt.setBackgroundResource(android.R.drawable.btn_default_small);
-            TextView custom_img = new TextView(this); custom_img.setText("Image"); custom_img.setBackgroundResource(android.R.drawable.btn_default_small);
-            TextView custom_def = new TextView(this); custom_def.setText("Default"); custom_def.setBackgroundResource(android.R.drawable.btn_default_small);
+            TextView custom_txt = new TextView(this); custom_txt.setId(R.id.custom_txt); custom_txt.setText("Text"); custom_txt.setBackgroundResource(android.R.drawable.btn_default_small);
+            TextView custom_img = new TextView(this); custom_img.setId(R.id.custom_img); custom_img.setText("Image"); custom_img.setBackgroundResource(android.R.drawable.btn_default_small);
+            TextView custom_def = new TextView(this); custom_def.setId(R.id.custom_def); custom_def.setText("Default"); custom_def.setBackgroundResource(android.R.drawable.btn_default_small);
             custom_txt.setBackgroundResource(R.drawable.rounded_textview);
             custom_txt.setGravity(Gravity.CENTER);
             custom_img.setBackgroundResource(R.drawable.rounded_textview);
@@ -60,10 +64,16 @@ public class CustomizeActivity extends NavigationDrawer implements FloatingActio
             custom_def.setBackgroundResource(R.drawable.rounded_textview);
             custom_def.setGravity(Gravity.CENTER);
 
+
             FrameLayout.LayoutParams tvParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
             custom_txt.setLayoutParams(tvParams);
             custom_img.setLayoutParams(tvParams);
             custom_def.setLayoutParams(tvParams);
+
+            custom_txt.setOnClickListener(this);
+            custom_img.setOnClickListener(this);
+            custom_def.setOnClickListener(this);
+
             SubActionButton.Builder subBuilder = new SubActionButton.Builder(this);
 
             FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
@@ -98,4 +108,27 @@ public class CustomizeActivity extends NavigationDrawer implements FloatingActio
         currentMenu = null;
     }
 
-}
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()){
+            case R.id.custom_txt:
+                customizeTxtPopup.PopupWindow(this);
+                break;
+
+            case R.id.custom_img:
+                Toast.makeText(CustomizeActivity.this,
+                        "Customize img clicked",
+                        Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.custom_def:
+                Toast.makeText(CustomizeActivity.this,
+                        "Customize def clicked",
+                        Toast.LENGTH_LONG).show();
+                break;
+        }
+    }
+
+
+    }
