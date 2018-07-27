@@ -1,5 +1,6 @@
 package com.prototype.messageboard;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -62,14 +63,6 @@ public class CreateUserActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        //updateUI(currentUser);
-    }
-
     private void createAccount(String userName, String password, String passwordHint, String email){
         Log.d(TAG, "createAccount:"+email);
         if (!validateForm()){
@@ -84,10 +77,10 @@ public class CreateUserActivity extends AppCompatActivity {
                 if (task.isSuccessful()){
                     Log.d(TAG, "createUserWithEmail:success");
                     FirebaseUser user = mAuth.getCurrentUser();
-                    //updateUI(user);
+                    startActivity(new Intent(CreateUserActivity.this,HomeActivity.class));
                 }else{
                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                    Toast.makeText(CreateUserActivity.this, "Authentication failed.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateUserActivity.this, "Email is already in use",Toast.LENGTH_SHORT).show();
                     //updateUI(null);
                 }
                 //hideProgressDialog();
