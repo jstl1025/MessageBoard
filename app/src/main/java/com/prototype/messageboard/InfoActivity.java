@@ -23,4 +23,10 @@ public class InfoActivity extends NavigationDrawer {
         View contentView = inflater.inflate(R.layout.activity_info, null, false);
         mDrawerLayout.addView(contentView, 0);
     }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        mDrawerLayout.closeDrawers();
+    }
 }

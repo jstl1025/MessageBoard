@@ -35,6 +35,16 @@ public class HomeActivity extends NavigationDrawer{
 
     }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        mDrawerLayout.closeDrawers();
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
 
     public void addListenerOnButton() {
         imageButton1 = (ImageButton) findViewById(R.id.imageButton1);

@@ -22,8 +22,11 @@ public class ProfileActivity extends NavigationDrawer {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View contentView = inflater.inflate(R.layout.activity_profile, null, false);
         mDrawerLayout.addView(contentView, 0);
+    }
 
-
-
+    @Override
+    public void onPause(){
+        super.onPause();
+        mDrawerLayout.closeDrawers();
     }
 }
