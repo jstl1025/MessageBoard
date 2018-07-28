@@ -100,5 +100,9 @@ public class DisplaySettingActivity extends NavigationDrawer {
         });
     }
 
-
+    @Override
+    public void onPause(){
+        super.onPause();
+        mDrawerLayout.closeDrawers();
+    }
 }

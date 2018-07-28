@@ -84,6 +84,16 @@ public class HomeActivity extends NavigationDrawer implements View.OnClickListen
         }
     }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        mDrawerLayout.closeDrawers();
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
 
 
 

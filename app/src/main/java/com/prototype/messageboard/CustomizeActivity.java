@@ -93,6 +93,12 @@ public class CustomizeActivity extends NavigationDrawer implements FloatingActio
     }
 
     @Override
+    public void onPause(){
+        super.onPause();
+        mDrawerLayout.closeDrawers();
+    }
+
+    @Override
     public void onMenuOpened(FloatingActionMenu menu){
         // Only allow one menu to stay open
         for(FloatingActionMenu iMenu : menus){
