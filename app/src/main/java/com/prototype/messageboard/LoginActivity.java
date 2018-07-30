@@ -51,7 +51,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        //updateUI(currentUser);
+        //DEVELOPMENT PURPOSE: uncomment to keep user logged in
+        if (currentUser != null){
+            startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+        }
     }
 
     public void createUser(View view){

@@ -31,6 +31,7 @@ public class CreateUserActivity extends AppCompatActivity {
     private EditText emailField;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
+    private String userName, password, hint, email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +54,11 @@ public class CreateUserActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createAccount(
-                        userNameField.getText().toString(),
-                        passwordField.getText().toString(),
-                        passwordHintField.getText().toString(),
-                        emailField.getText().toString()
-                );
+                userName = userNameField.getText().toString();
+                password = passwordField.getText().toString();
+                hint = passwordHintField.getText().toString();
+                email = emailField.getText().toString();
+                createAccount(userName,password,hint,email);
             }
         });
     }
@@ -76,7 +76,7 @@ public class CreateUserActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     Log.d(TAG, "createUserWithEmail:success");
-                    FirebaseUser user = mAuth.getCurrentUser();
+                    createNewUser(task.getResult().getUser());
                     startActivity(new Intent(CreateUserActivity.this,HomeActivity.class));
                 }else{
                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -91,11 +91,6 @@ public class CreateUserActivity extends AppCompatActivity {
 
     private boolean validateForm(){
         boolean valid = true;
-
-        String userName = userNameField.getText().toString();
-        String password = passwordField.getText().toString();
-        String email = emailField.getText().toString();
-
 
         if (TextUtils.isEmpty(userName)){
             userNameField.setError("REQUIRED");
@@ -120,19 +115,12 @@ public class CreateUserActivity extends AppCompatActivity {
         return valid;
     }
 
-    /*private void updateUI(FirebaseUser user){
-        //hideProgrssDialog();
+    private void createNewUser(FirebaseUser newUser){
+        String userId = newUser.getUid();
 
-        if (user!=null){
+        User user = new User(userName, newUser.getEmail(), hint);
 
-        }
-    }*/
+        mDatabase.child("users").child(userId).setValue(user);
 
-    /*private void writeNewUser(String userName, String password, String passwordHint){
-        User user = new User(userName);
-        user.setPassword(password);
-        user.setPasswordHint(passwordHint);
-
-        mDatabase.child("users").child(userName).setValue(user);
-    }*/
+    }
 }

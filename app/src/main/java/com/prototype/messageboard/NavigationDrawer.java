@@ -10,6 +10,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class NavigationDrawer extends AppCompatActivity {
@@ -18,6 +28,8 @@ public class NavigationDrawer extends AppCompatActivity {
     private ActionBarDrawerToggle mToggle;
     private NavigationView nv;
     private Toolbar mToolbar;
+    private View headerView;
+    private TextView nv_username;
 
 
     @Override
@@ -75,6 +87,9 @@ public class NavigationDrawer extends AppCompatActivity {
                 }
 
         );
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        fetchUsername(currentUser);
     }
 
     @Override
@@ -94,5 +109,23 @@ public class NavigationDrawer extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mToggle.onConfigurationChanged(newConfig);
+    }
+
+    private void fetchUsername(FirebaseUser currentUser){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users/"+currentUser.getUid());
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                headerView = nv.getHeaderView(0);
+                nv_username = headerView.findViewById(R.id.nv_username);
+                nv_username.setText(user.getUserName());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
