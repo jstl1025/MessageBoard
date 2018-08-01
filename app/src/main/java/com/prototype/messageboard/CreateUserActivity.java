@@ -20,6 +20,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class CreateUserActivity extends AppCompatActivity {
 
     private static final String TAG = "EmailPassword";
@@ -99,15 +102,15 @@ public class CreateUserActivity extends AppCompatActivity {
             userNameField.setError(null);
         }
 
-        if (TextUtils.isEmpty(password)){
-            passwordField.setError("REQUIRED");
+        if (TextUtils.isEmpty(password) || password.length() < 6){
+            passwordField.setError("REQUIRED, the character should be 6 or more");
             valid = false;
         }else{
             passwordField.setError(null);
         }
 
-        if (TextUtils.isEmpty(email)){
-            emailField.setError("REQUIRED");
+        if (!isEmailValid(email)){
+            emailField.setError("Not a valid email format");
             valid = false;
         }else{
             emailField.setError(null);
@@ -122,5 +125,18 @@ public class CreateUserActivity extends AppCompatActivity {
 
         mDatabase.child("users").child(userId).setValue(user);
 
+    }
+
+    /**
+     * method is used for checking valid email id format.
+     *
+     * @param email
+     * @return boolean true for valid false for invalid
+     */
+    public static boolean isEmailValid(String email) {
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 }
