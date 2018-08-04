@@ -30,31 +30,21 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        if(mAuth.getCurrentUser()!=null){
+            startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+            finish();
+        }
+
         email = findViewById(R.id.lEmail);
         password = findViewById(R.id.lPassword);
-
-        signInBtn=findViewById(R.id.signIn);
+        signInBtn = findViewById(R.id.signIn);
 
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signIn(email.getText().toString(),password.getText().toString());
-
-                //this line is for development, remove later
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             }
         });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        //DEVELOPMENT PURPOSE: uncomment to keep user logged in
-        if (currentUser != null){
-            startActivity(new Intent(LoginActivity.this,HomeActivity.class));
-        }
     }
 
     public void createUser(View view){
@@ -74,8 +64,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
                             Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
                             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                            finish();
                         }else {
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Login unsuccessful", Toast.LENGTH_SHORT).show();

@@ -42,11 +42,11 @@ public class CreateUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_user);
 
         //button & views
-        signUpButton=(Button) findViewById(R.id.signUp);
-        userNameField = (EditText) findViewById(R.id.userName);
-        passwordField = (EditText) findViewById(R.id.password);
-        passwordHintField = (EditText) findViewById(R.id.passwordHint);
-        emailField = (EditText) findViewById(R.id.email);
+        signUpButton = findViewById(R.id.signUp);
+        userNameField = findViewById(R.id.userName);
+        passwordField =  findViewById(R.id.password);
+        passwordHintField = findViewById(R.id.passwordHint);
+        emailField = findViewById(R.id.email);
 
         //real time database
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -81,6 +81,7 @@ public class CreateUserActivity extends AppCompatActivity {
                     Log.d(TAG, "createUserWithEmail:success");
                     createNewUser(task.getResult().getUser());
                     startActivity(new Intent(CreateUserActivity.this,HomeActivity.class));
+                    finish();
                 }else{
                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
                     Toast.makeText(CreateUserActivity.this, "Email is already in use",Toast.LENGTH_SHORT).show();
@@ -103,7 +104,7 @@ public class CreateUserActivity extends AppCompatActivity {
         }
 
         if (TextUtils.isEmpty(password) || password.length() < 6){
-            passwordField.setError("REQUIRED, the character should be 6 or more");
+            passwordField.setError("REQUIRED, enter minimum 6 characters!");
             valid = false;
         }else{
             passwordField.setError(null);

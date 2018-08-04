@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/popup_element"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/logout_pop_border">
+
+
+    <TextView
+        android:id="@+id/logout_header"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:animateLayoutChanges="false"
+        android:gravity="center"
+        android:maxLength="20"
+        android:maxLines="1"
+        android:text="Log out"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/logout_msg"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Are you sure you want to log out?"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logout_header" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="235dp"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@+id/logout_msg" />
+
+    <Button
+        android:id="@+id/logout_cancel"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/logout_btn_bkg"
+        android:text="Cancel"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <View
+        android:id="@+id/vertical_separator"
+        android:layout_width="1dp"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@+id/logout_cancel"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toStartOf="@+id/logout_confirm"
+        app:layout_constraintStart_toEndOf="@+id/logout_cancel"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <Button
+        android:id="@+id/logout_confirm"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@+id/vertical_separator"
+        android:background="?android:selectableItemBackgroundBorderless"
+        android:text="Log out"
+        android:textColor="@color/colorRed"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/vertical_separator"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+
+
+
+</android.support.constraint.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.prototype.messageboard;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
@@ -9,8 +10,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,12 +37,26 @@ public class NavigationDrawer extends AppCompatActivity {
     private Toolbar mToolbar;
     private View headerView;
     private TextView nv_username;
+    private Button logout_confirm, logout_cancel;
+    private LinearLayout logout;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer);
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(firebaseAuth.getCurrentUser() == null){
+                    startActivity(new Intent(NavigationDrawer.this,LoginActivity.class));
+                    finish();
+                }
+            }
+        };
 
         //overlay toolbar
         mToolbar = (Toolbar) findViewById(R.id.nav_action);
@@ -88,8 +109,32 @@ public class NavigationDrawer extends AppCompatActivity {
 
         );
 
+        //Sign out user
+        mAuth = FirebaseAuth.getInstance();
+        logout = findViewById(R.id.logoutView);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logoutPopup(NavigationDrawer.this);
+            }
+        });
+
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         fetchUsername(currentUser);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 
     @Override
@@ -125,6 +170,51 @@ public class NavigationDrawer extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+    }
+
+    public void signOut(){
+        mAuth.signOut();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() == null){
+                    startActivity(new Intent(NavigationDrawer.this, LoginActivity.class));
+                    finish();
+                }
+            }
+        };
+    }
+
+    private void logoutPopup(Context context){
+
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = layoutInflater.inflate(R.layout.logout_popup, null);
+
+        float density=NavigationDrawer.this.getResources().getDisplayMetrics().density;
+
+        final PopupWindow logoutPopup = new PopupWindow(layout, (int)density*240, (int)density*285, true);
+        logoutPopup.setContentView(layout);
+        logoutPopup.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
+        logoutPopup.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
+        logoutPopup.setFocusable(true);
+        logoutPopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
+
+        logout_confirm = layout.findViewById(R.id.logout_confirm);
+        logout_cancel = layout.findViewById(R.id.logout_cancel);
+        logout_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signOut();
+                logoutPopup.dismiss();
+            }
+        });
+        logout_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logoutPopup.dismiss();
             }
         });
     }
