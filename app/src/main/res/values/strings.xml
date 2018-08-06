@@ -3,4 +3,6 @@
     <string name="action_settings">Setting</string>
     <string name="open">open</string>
     <string name="close">close</string>
+    <string name="loading">Signing in…</string>
+    <string name="signup">Signing up… Directing to home page</string>
 </resources>

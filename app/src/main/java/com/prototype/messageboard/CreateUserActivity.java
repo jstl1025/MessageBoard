@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +24,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CreateUserActivity extends AppCompatActivity {
+public class CreateUserActivity extends LoadingDialog {
 
     private static final String TAG = "EmailPassword";
 
@@ -54,6 +55,15 @@ public class CreateUserActivity extends AppCompatActivity {
         //initialize auth
         mAuth = FirebaseAuth.getInstance();
 
+        //hide keyboard when click outside of EditText
+        findViewById(R.id.signUpPage).setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                hideKeyboard(getCurrentFocus());
+                return true;
+            }
+        });
+
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,7 +82,8 @@ public class CreateUserActivity extends AppCompatActivity {
             return;
         }
 
-        //showProgressDialog();
+        hideKeyboard(this.getCurrentFocus());
+        showProgressDialog(R.string.signup);
 
         mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
@@ -87,7 +98,7 @@ public class CreateUserActivity extends AppCompatActivity {
                     Toast.makeText(CreateUserActivity.this, "Email is already in use",Toast.LENGTH_SHORT).show();
                     //updateUI(null);
                 }
-                //hideProgressDialog();
+                hideProgressDialog();
             }
         });
         //writeNewUser(userName,password,passwordHint);
