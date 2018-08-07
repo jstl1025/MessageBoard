@@ -10,7 +10,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -48,15 +47,7 @@ public class NavigationDrawer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer);
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser() == null){
-                    startActivity(new Intent(NavigationDrawer.this,LoginActivity.class));
-                    finish();
-                }
-            }
-        };
+        userStateChange();
 
         //overlay toolbar
         mToolbar = (Toolbar) findViewById(R.id.nav_action);
@@ -174,9 +165,7 @@ public class NavigationDrawer extends AppCompatActivity {
         });
     }
 
-    public void signOut(){
-        mAuth.signOut();
-
+    public void userStateChange(){
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -207,7 +196,8 @@ public class NavigationDrawer extends AppCompatActivity {
         logout_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                signOut();
+                mAuth.signOut();
+                userStateChange();
                 logoutPopup.dismiss();
             }
         });
