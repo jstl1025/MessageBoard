@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +21,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.StorageReference;
 
-public class CreateUserActivity extends AppCompatActivity {
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class CreateUserActivity extends LoadingDialog {
 
     private static final String TAG = "EmailPassword";
 
@@ -31,6 +35,7 @@ public class CreateUserActivity extends AppCompatActivity {
     private EditText emailField;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
+    private String userName, password, hint, email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +43,11 @@ public class CreateUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_user);
 
         //button & views
-        signUpButton=(Button) findViewById(R.id.signUp);
-        userNameField = (EditText) findViewById(R.id.userName);
-        passwordField = (EditText) findViewById(R.id.password);
-        passwordHintField = (EditText) findViewById(R.id.passwordHint);
-        emailField = (EditText) findViewById(R.id.email);
+        signUpButton = findViewById(R.id.signUp);
+        userNameField = findViewById(R.id.userName);
+        passwordField =  findViewById(R.id.password);
+        passwordHintField = findViewById(R.id.passwordHint);
+        emailField = findViewById(R.id.email);
 
         //real time database
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -50,15 +55,23 @@ public class CreateUserActivity extends AppCompatActivity {
         //initialize auth
         mAuth = FirebaseAuth.getInstance();
 
+        //hide keyboard when click outside of EditText
+        findViewById(R.id.signUpPage).setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                hideKeyboard(getCurrentFocus());
+                return true;
+            }
+        });
+
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createAccount(
-                        userNameField.getText().toString(),
-                        passwordField.getText().toString(),
-                        passwordHintField.getText().toString(),
-                        emailField.getText().toString()
-                );
+                userName = userNameField.getText().toString();
+                password = passwordField.getText().toString();
+                hint = passwordHintField.getText().toString();
+                email = emailField.getText().toString();
+                createAccount(userName,password,hint,email);
             }
         });
     }
@@ -69,21 +82,23 @@ public class CreateUserActivity extends AppCompatActivity {
             return;
         }
 
-        //showProgressDialog();
+        hideKeyboard(this.getCurrentFocus());
+        showProgressDialog(R.string.signup);
 
         mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     Log.d(TAG, "createUserWithEmail:success");
-                    FirebaseUser user = mAuth.getCurrentUser();
+                    createNewUser(task.getResult().getUser());
                     startActivity(new Intent(CreateUserActivity.this,HomeActivity.class));
+                    finish();
                 }else{
                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
                     Toast.makeText(CreateUserActivity.this, "Email is already in use",Toast.LENGTH_SHORT).show();
                     //updateUI(null);
                 }
-                //hideProgressDialog();
+                hideProgressDialog();
             }
         });
         //writeNewUser(userName,password,passwordHint);
@@ -92,11 +107,6 @@ public class CreateUserActivity extends AppCompatActivity {
     private boolean validateForm(){
         boolean valid = true;
 
-        String userName = userNameField.getText().toString();
-        String password = passwordField.getText().toString();
-        String email = emailField.getText().toString();
-
-
         if (TextUtils.isEmpty(userName)){
             userNameField.setError("REQUIRED");
             valid = false;
@@ -104,15 +114,15 @@ public class CreateUserActivity extends AppCompatActivity {
             userNameField.setError(null);
         }
 
-        if (TextUtils.isEmpty(password)){
-            passwordField.setError("REQUIRED");
+        if (TextUtils.isEmpty(password) || password.length() < 6){
+            passwordField.setError("REQUIRED, enter minimum 6 characters!");
             valid = false;
         }else{
             passwordField.setError(null);
         }
 
-        if (TextUtils.isEmpty(email)){
-            emailField.setError("REQUIRED");
+        if (!isEmailValid(email)){
+            emailField.setError("Not a valid email format");
             valid = false;
         }else{
             emailField.setError(null);
@@ -120,19 +130,25 @@ public class CreateUserActivity extends AppCompatActivity {
         return valid;
     }
 
-    /*private void updateUI(FirebaseUser user){
-        //hideProgrssDialog();
+    private void createNewUser(FirebaseUser newUser){
+        String userId = newUser.getUid();
 
-        if (user!=null){
+        User user = new User(userName, newUser.getEmail(), hint);
 
-        }
-    }*/
+        mDatabase.child("users").child(userId).setValue(user);
 
-    /*private void writeNewUser(String userName, String password, String passwordHint){
-        User user = new User(userName);
-        user.setPassword(password);
-        user.setPasswordHint(passwordHint);
+    }
 
-        mDatabase.child("users").child(userName).setValue(user);
-    }*/
+    /**
+     * method is used for checking valid email id format.
+     *
+     * @param email
+     * @return boolean true for valid false for invalid
+     */
+    public static boolean isEmailValid(String email) {
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
 }
