@@ -52,6 +52,7 @@
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
+    <!--Pop up window in Home activity-->
     <style name="Theme.AppCompat.Translucent" parent="Theme.AppCompat.NoActionBar">
         <item name="android:background">#D3D3D3</item> <!-- Or any transparency or color you need -->
         <item name="android:windowNoTitle">true</item>
@@ -59,6 +60,12 @@
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
+    </style>
+
+    <!--Activity Switch-->
+    <style name="CustomActivityAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
     </style>
 
 </resources>
