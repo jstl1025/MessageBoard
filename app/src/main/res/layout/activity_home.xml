@@ -16,79 +16,73 @@
     tools:context=".HomeActivity"
     android:id="@+id/home">
 
-    <ImageButton
-        android:id="@+id/imageButton1"
+    <Button
+        android:id="@+id/homeButton1"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="100dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/baseline_android_black_18dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton2"
+        app:layout_constraintEnd_toStartOf="@+id/homeButton2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/imageButton2"
+    <Button
+        android:id="@+id/homeButton2"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginEnd="50dp"
         android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/baseline_android_black_18dp"
         android:scaleType="fitCenter"/>
 
-    <ImageButton
-        android:id="@+id/imageButton3"
+    <Button
+        android:id="@+id/homeButton3"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton4"
+        app:layout_constraintEnd_toStartOf="@+id/homeButton4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton1"
-        android:src="@drawable/baseline_android_black_18dp"
+        app:layout_constraintTop_toBottomOf="@+id/homeButton1"
         android:scaleType="fitCenter" />
 
-    <ImageButton
-        android:id="@+id/imageButton4"
+    <Button
+        android:id="@+id/homeButton4"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginEnd="50dp"
         android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton2"
-        android:src="@drawable/baseline_android_black_18dp"
+        app:layout_constraintTop_toBottomOf="@+id/homeButton2"
         android:scaleType="fitCenter" />
 
-    <ImageButton
-        android:id="@+id/imageButton5"
+    <Button
+        android:id="@+id/homeButton5"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton6"
+        app:layout_constraintEnd_toStartOf="@+id/homeButton6"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
-        android:src="@drawable/baseline_android_black_18dp"
+        app:layout_constraintTop_toBottomOf="@+id/homeButton3"
         android:scaleType="fitCenter" />
 
-    <ImageButton
-        android:id="@+id/imageButton6"
+    <Button
+        android:id="@+id/homeButton6"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginEnd="50dp"
         android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton4"
-        android:src="@drawable/baseline_android_black_18dp"
+        app:layout_constraintTop_toBottomOf="@+id/homeButton4"
         android:scaleType="fitCenter" />
 
 

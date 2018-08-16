@@ -5,14 +5,15 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,13 +27,15 @@ public class CustomizeActivity extends NavigationDrawer implements FloatingActio
 
     private ArrayList<FloatingActionMenu> menus;
     private FloatingActionMenu currentMenu;
-    int[] imgIds = {R.id.imageButton1,
-                    R.id.imageButton2,
-                    R.id.imageButton3,
-                    R.id.imageButton4,
-                    R.id.imageButton5,
-                    R.id.imageButton6};
+    int[] customizeIds = {R.id.customizeButton1,
+                    R.id.customizeButton2,
+                    R.id.customizeButton3,
+                    R.id.customizeButton4,
+                    R.id.customizeButton5,
+                    R.id.customizeButton6};
     private CustomizeTxtPopup customizeTxtPopup;
+    int pos;
+    Button customBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +56,7 @@ public class CustomizeActivity extends NavigationDrawer implements FloatingActio
         menus = new ArrayList<FloatingActionMenu>();
 
         for (int i=0; i<6; i++){
-            ImageButton img = findViewById(imgIds[i]);
+            Button img = findViewById(customizeIds[i]);
             TextView custom_txt = new TextView(this); custom_txt.setId(R.id.custom_txt); custom_txt.setText("Text"); custom_txt.setBackgroundResource(android.R.drawable.btn_default_small);
             TextView custom_img = new TextView(this); custom_img.setId(R.id.custom_img); custom_img.setText("Image"); custom_img.setBackgroundResource(android.R.drawable.btn_default_small);
             TextView custom_def = new TextView(this); custom_def.setId(R.id.custom_def); custom_def.setText("Default"); custom_def.setBackgroundResource(android.R.drawable.btn_default_small);
@@ -89,7 +92,6 @@ public class CustomizeActivity extends NavigationDrawer implements FloatingActio
 
             menus.add(actionMenu);
         }
-
     }
 
     @Override
@@ -116,10 +118,12 @@ public class CustomizeActivity extends NavigationDrawer implements FloatingActio
 
     @Override
     public void onClick(View view) {
+        pos = menus.indexOf(currentMenu);
+        customBtn = findViewById(customizeIds[pos]);
 
         switch (view.getId()){
             case R.id.custom_txt:
-                customizeTxtPopup.PopupWindow(this);
+                customizeTxtPopup.PopupWindow(this, customBtn);
                 break;
 
             case R.id.custom_img:

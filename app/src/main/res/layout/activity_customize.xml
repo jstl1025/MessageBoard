@@ -8,21 +8,21 @@
     tools:context=".CustomizeActivity"
     android:background="?attr/backgroundcolor">
 
-    <ImageButton
-        android:id="@+id/imageButton1"
+    <Button
+        android:id="@+id/customizeButton1"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="100dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton2"
+        app:layout_constraintEnd_toStartOf="@+id/customizeButton2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:color/transparent" />
 
-    <ImageButton
-        android:id="@+id/imageButton2"
+    <Button
+        android:id="@+id/customizeButton2"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginEnd="50dp"
@@ -31,52 +31,52 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:color/transparent" />
 
-    <ImageButton
-        android:id="@+id/imageButton3"
+    <Button
+        android:id="@+id/customizeButton3"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton4"
+        app:layout_constraintEnd_toStartOf="@+id/customizeButton4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton1"
+        app:layout_constraintTop_toBottomOf="@+id/customizeButton1"
         app:srcCompat="@android:color/transparent" />
 
-    <ImageButton
-        android:id="@+id/imageButton4"
+    <Button
+        android:id="@+id/customizeButton4"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginEnd="50dp"
         android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton2"
+        app:layout_constraintTop_toBottomOf="@+id/customizeButton2"
         app:srcCompat="@android:color/transparent" />
 
-    <ImageButton
-        android:id="@+id/imageButton5"
+    <Button
+        android:id="@+id/customizeButton5"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton6"
+        app:layout_constraintEnd_toStartOf="@+id/customizeButton6"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
+        app:layout_constraintTop_toBottomOf="@+id/customizeButton3"
         app:srcCompat="@android:color/transparent" />
 
 
 
-    <ImageButton
-        android:id="@+id/imageButton6"
+    <Button
+        android:id="@+id/customizeButton6"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginEnd="50dp"
         android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton4"
+        app:layout_constraintTop_toBottomOf="@+id/customizeButton4"
         app:srcCompat="@android:color/transparent" />
 
 

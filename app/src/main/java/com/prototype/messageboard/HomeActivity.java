@@ -6,10 +6,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 public class HomeActivity extends NavigationDrawer implements View.OnClickListener{
-    ImageButton imageButton1, imageButton2, imageButton3, imageButton4, imageButton5, imageButton6;
+    Button homeBtn1, homeBtn2, homeBtn3, homeBtn4, homeBtn5, homeBtn6;
 
 
     @Override
@@ -30,19 +31,21 @@ public class HomeActivity extends NavigationDrawer implements View.OnClickListen
         View contentView = inflater.inflate(R.layout.activity_home, null, false);
         mDrawerLayout.addView(contentView, 0);
 
+
+
         //addListenerOnButton();
-        ImageButton one = (ImageButton) findViewById(R.id.imageButton1);
-        one.setOnClickListener(HomeActivity.this); //call on click event
-        ImageButton two = (ImageButton) findViewById(R.id.imageButton2);
-        two.setOnClickListener(HomeActivity.this);
-        ImageButton three = (ImageButton) findViewById(R.id.imageButton3);
-        three.setOnClickListener(HomeActivity.this);
-        ImageButton four = (ImageButton) findViewById(R.id.imageButton4);
-        four.setOnClickListener(HomeActivity.this);
-        ImageButton five = (ImageButton) findViewById(R.id.imageButton5);
-        five.setOnClickListener(HomeActivity.this);
-        ImageButton six = (ImageButton) findViewById(R.id.imageButton6);
-        six.setOnClickListener(HomeActivity.this);
+        homeBtn1 = findViewById(R.id.homeButton1);
+        homeBtn1.setOnClickListener(HomeActivity.this); //call on click event
+        homeBtn2 = findViewById(R.id.homeButton2);
+        homeBtn2.setOnClickListener(HomeActivity.this);
+        homeBtn3 = findViewById(R.id.homeButton3);
+        homeBtn3.setOnClickListener(HomeActivity.this);
+        homeBtn4 = findViewById(R.id.homeButton4);
+        homeBtn4.setOnClickListener(HomeActivity.this);
+        homeBtn5 = findViewById(R.id.homeButton5);
+        homeBtn5.setOnClickListener(HomeActivity.this);
+        homeBtn6 = findViewById(R.id.homeButton6);
+        homeBtn6.setOnClickListener(HomeActivity.this);
 
 
     }
@@ -51,7 +54,7 @@ public class HomeActivity extends NavigationDrawer implements View.OnClickListen
     public void onClick(View v) {
         Intent intent = new Intent(HomeActivity.this, Pop.class);
         switch(v.getId()) {
-            case R.id.imageButton1:
+            case R.id.homeButton1:
 //              Blur image
 //              Bitmap resultBmp = BlurBuilder.blur(HomeActivity.this, BitmapFactory.decodeResource(getResources(), R.drawable.baseline_android_black_18dp));
 //              ImageButton imageButton1 = (ImageButton) findViewById(R.id.imageButton1);
@@ -59,23 +62,23 @@ public class HomeActivity extends NavigationDrawer implements View.OnClickListen
                 intent.putExtra("imageButton", 1);
                 startActivity(intent);
                 break;
-            case R.id.imageButton2:
+            case R.id.homeButton2:
                 intent.putExtra("imageButton", 2);
                 startActivity(intent);
                 break;
-            case R.id.imageButton3:
+            case R.id.homeButton3:
                 intent.putExtra("imageButton", 3);
                 startActivity(intent);
                 break;
-            case R.id.imageButton4:
+            case R.id.homeButton4:
                 intent.putExtra("imageButton", 4);
                 startActivity(intent);
                 break;
-            case R.id.imageButton5:
+            case R.id.homeButton5:
                 intent.putExtra("imageButton", 5);
                 startActivity(intent);
                 break;
-            case R.id.imageButton6:
+            case R.id.homeButton6:
                 intent.putExtra("imageButton", 6);
                 startActivity(intent);
                 break;
