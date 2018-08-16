@@ -75,21 +75,25 @@ public class NavigationDrawer extends AppCompatActivity {
                             menuItem.setChecked(true);
                             startActivity(new Intent(NavigationDrawer.this, ProfileActivity.class));
                             menuItem.setChecked(true);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             //Toast.makeText(HomeActivity.this, "Profile", Toast.LENGTH_SHORT).show();
                             //mDrawerLayout.closeDrawers();
                         } else if (id == R.id.display_settings) {
                             menuItem.setChecked(true);
                             startActivity(new Intent(NavigationDrawer.this, DisplaySettingActivity.class));
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         } else if (id == R.id.custom) {
                             startActivity(new Intent(NavigationDrawer.this, CustomizeActivity.class));
                             menuItem.setChecked(true);
-
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         } else if (id == R.id.info) {
                             startActivity(new Intent(NavigationDrawer.this, InfoActivity.class));
                             menuItem.setChecked(true);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         } else if (id == R.id.home) {
                             startActivity(new Intent(NavigationDrawer.this, HomeActivity.class));
                             menuItem.setChecked(true);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         }
 
                         return true;
