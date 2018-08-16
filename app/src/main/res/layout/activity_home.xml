@@ -16,7 +16,7 @@
     tools:context=".HomeActivity"
     android:id="@+id/home">
 
-    <Button
+    <ImageView
         android:id="@+id/homeButton1"
         android:layout_width="100dp"
         android:layout_height="100dp"

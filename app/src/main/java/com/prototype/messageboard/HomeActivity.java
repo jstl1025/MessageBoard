@@ -8,9 +8,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class HomeActivity extends NavigationDrawer implements View.OnClickListener{
-    Button homeBtn1, homeBtn2, homeBtn3, homeBtn4, homeBtn5, homeBtn6;
+    Button /*homeBtn1,*/ homeBtn2, homeBtn3, homeBtn4, homeBtn5, homeBtn6;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    ImageView homeBtn1;
 
 
     @Override
@@ -47,7 +57,7 @@ public class HomeActivity extends NavigationDrawer implements View.OnClickListen
         homeBtn6 = findViewById(R.id.homeButton6);
         homeBtn6.setOnClickListener(HomeActivity.this);
 
-
+        refreshBtn();
     }
 
     @Override
@@ -98,6 +108,14 @@ public class HomeActivity extends NavigationDrawer implements View.OnClickListen
         moveTaskToBack(true);
     }
 
+    private void refreshBtn(){
+        String path = "dIcons/" + "emo1" + ".png"; //middle string replace with user custom array later
+        StorageReference storageRef = storage.getReference(path);
+
+        GlideApp.with(this)
+                .load(storageRef)
+                .into(homeBtn1);
+    }
 
 
 //    public void addListenerOnButton() {
