@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -132,8 +133,12 @@ public class CreateUserActivity extends LoadingDialog {
 
     private void createNewUser(FirebaseUser newUser){
         String userId = newUser.getUid();
+        ArrayList<String> iconPaths = new ArrayList<String>();
+        iconPaths.add("dIcons/emo1.png");
+        iconPaths.add("dIcons/emo2.png");
+        iconPaths.add("dIcons/emo3.png");
 
-        User user = new User(userName, newUser.getEmail(), hint);
+        User user = new User(userName, newUser.getEmail(), hint,iconPaths);
 
         mDatabase.child("users").child(userId).setValue(user);
 

@@ -3,6 +3,7 @@ package com.prototype.messageboard;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +14,24 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
+
 public class HomeActivity extends NavigationDrawer implements View.OnClickListener{
     Button /*homeBtn1,*/ homeBtn2, homeBtn3, homeBtn4, homeBtn5, homeBtn6;
-    private FirebaseStorage storage = FirebaseStorage.getInstance();
-    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private FirebaseStorage storage;
+    private FirebaseUser currentUser;
+    private DatabaseReference ref;
     ImageView homeBtn1;
+    /*ImageView[] imgV = {homeBtn1};*/
+    private ValueEventListener mIconListener;
 
 
     @Override
@@ -41,7 +52,10 @@ public class HomeActivity extends NavigationDrawer implements View.OnClickListen
         View contentView = inflater.inflate(R.layout.activity_home, null, false);
         mDrawerLayout.addView(contentView, 0);
 
-
+        //Initialize database references
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        ref = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid());
+        storage = FirebaseStorage.getInstance();
 
         //addListenerOnButton();
         homeBtn1 = findViewById(R.id.homeButton1);
@@ -57,7 +71,43 @@ public class HomeActivity extends NavigationDrawer implements View.OnClickListen
         homeBtn6 = findViewById(R.id.homeButton6);
         homeBtn6.setOnClickListener(HomeActivity.this);
 
-        refreshBtn();
+        /*refreshHome();*/
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        ValueEventListener iconListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                ArrayList<String> iconPaths = user.getIconPaths();
+                StorageReference storageRef = storage.getReference(iconPaths.get(0));
+
+                GlideApp.with(HomeActivity.this)
+                        .load(storageRef)
+                        .into(homeBtn1);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        ref.addValueEventListener(iconListener);
+
+        //keep a copy of iconListener to remove when app stops
+        mIconListener = iconListener;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //remove icon listener
+        if(mIconListener!=null){
+            ref.removeEventListener(mIconListener);
+        }
     }
 
     @Override
@@ -107,16 +157,6 @@ public class HomeActivity extends NavigationDrawer implements View.OnClickListen
     public void onBackPressed() {
         moveTaskToBack(true);
     }
-
-    private void refreshBtn(){
-        String path = "dIcons/" + "emo1" + ".png"; //middle string replace with user custom array later
-        StorageReference storageRef = storage.getReference(path);
-
-        GlideApp.with(this)
-                .load(storageRef)
-                .into(homeBtn1);
-    }
-
 
 //    public void addListenerOnButton() {
 //        imageButton1 = (ImageButton) findViewById(R.id.imageButton1);
