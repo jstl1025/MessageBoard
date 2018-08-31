@@ -127,9 +127,7 @@ public class CustomizeActivity extends NavigationDrawer implements FloatingActio
                 break;
 
             case R.id.custom_img:
-                Toast.makeText(CustomizeActivity.this,
-                        "Customize img clicked",
-                        Toast.LENGTH_LONG).show();
+                startActivity(new Intent(CustomizeActivity.this, CustomizeIconActivity.class));
                 break;
 
             case R.id.custom_def:

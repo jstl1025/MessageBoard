@@ -22,8 +22,11 @@
         <activity android:name=".DisplaySettingActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".NavigationDrawer" />
-        <activity android:name=".InfoActivity"></activity>
-        <activity android:name=".Pop" android:theme="@style/Theme.AppCompat.Translucent"></activity>
+        <activity android:name=".InfoActivity" />
+        <activity
+            android:name=".Pop"
+            android:theme="@style/Theme.AppCompat.Translucent" />
+        <activity android:name=".CustomizeIconActivity"></activity>
     </application>
 
 </manifest>
