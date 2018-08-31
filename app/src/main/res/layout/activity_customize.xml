@@ -8,7 +8,7 @@
     tools:context=".CustomizeActivity"
     android:background="?attr/backgroundcolor">
 
-    <Button
+    <ImageView
         android:id="@+id/customizeButton1"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:color/transparent" />
 
-    <Button
+    <ImageView
         android:id="@+id/customizeButton2"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -31,7 +31,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:color/transparent" />
 
-    <Button
+    <ImageView
         android:id="@+id/customizeButton3"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -44,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/customizeButton1"
         app:srcCompat="@android:color/transparent" />
 
-    <Button
+    <ImageView
         android:id="@+id/customizeButton4"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -54,7 +54,7 @@
         app:layout_constraintTop_toBottomOf="@+id/customizeButton2"
         app:srcCompat="@android:color/transparent" />
 
-    <Button
+    <ImageView
         android:id="@+id/customizeButton5"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -69,7 +69,7 @@
 
 
 
-    <Button
+    <ImageView
         android:id="@+id/customizeButton6"
         android:layout_width="100dp"
         android:layout_height="100dp"

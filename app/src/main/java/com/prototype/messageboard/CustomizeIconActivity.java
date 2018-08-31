@@ -1,5 +1,7 @@
 package com.prototype.messageboard;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +34,8 @@ public class CustomizeIconActivity extends AppCompatActivity implements View.OnC
     private int selectedPos=-1;
     private boolean selected = false;
     private View selectedView;
+    private ArrayList<StorageReference> storageRef;
+    private ArrayList<String> iconsPaths;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +63,9 @@ public class CustomizeIconActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                ArrayList<String> iconsPaths = user.getIconPaths();
+                iconsPaths = user.getIconPaths();
 
-                ArrayList<StorageReference> storageRef = new ArrayList<StorageReference>();
+                storageRef = new ArrayList<StorageReference>();
                 for(String pathStr : iconsPaths){
                     storageRef.add(storage.getReference(pathStr));
                 }
@@ -115,13 +119,24 @@ public class CustomizeIconActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onClick(View view){
+        Intent returnIntent;
         switch(view.getId()){
             case R.id.cancelSelect:
+                returnIntent = new Intent();
+                setResult(Activity.RESULT_CANCELED,returnIntent);
                 finish();
                 break;
 
-            case R.id.confirmSelect:
-                finish();
+            case R.id.confirmSelect: //if no icon selected
+                if(selected){
+                    returnIntent = new Intent();
+                    returnIntent.putExtra("iconPath",iconsPaths.get(selectedPos));
+                    setResult(Activity.RESULT_OK,returnIntent);
+                    finish();
+                }
+                else{
+                    Toast.makeText(this,"No icon selected!",Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
