@@ -25,13 +25,14 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 
 public class HomeActivity extends NavigationDrawer implements View.OnClickListener{
-    Button /*homeBtn1,*/ homeBtn2, homeBtn3, homeBtn4, homeBtn5, homeBtn6;
+    /*Button *//*homeBtn1,*//* homeBtn2, homeBtn3, homeBtn4, homeBtn5, homeBtn6;*/
     private FirebaseStorage storage;
     private FirebaseUser currentUser;
     private DatabaseReference ref;
-    ImageView homeBtn1;
+    private ImageView homeBtn1, homeBtn2, homeBtn3, homeBtn4, homeBtn5, homeBtn6;
     /*ImageView[] imgV = {homeBtn1};*/
     private ValueEventListener mIconListener;
+    private ArrayList<ImageView> imgView;
 
 
     @Override
@@ -71,7 +72,9 @@ public class HomeActivity extends NavigationDrawer implements View.OnClickListen
         homeBtn6 = findViewById(R.id.homeButton6);
         homeBtn6.setOnClickListener(HomeActivity.this);
 
-        /*refreshHome();*/
+        imgView = new ArrayList<>();
+        imgView.add(homeBtn1); imgView.add(homeBtn2); imgView.add(homeBtn3);
+        imgView.add(homeBtn4); imgView.add(homeBtn5); imgView.add(homeBtn6);
     }
 
     @Override
@@ -83,11 +86,12 @@ public class HomeActivity extends NavigationDrawer implements View.OnClickListen
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 ArrayList<String> iconPaths = user.getIconPaths();
-                StorageReference storageRef = storage.getReference(iconPaths.get(0));
 
-                GlideApp.with(HomeActivity.this)
-                        .load(storageRef)
-                        .into(homeBtn1);
+                for(int i = 0; i<iconPaths.size(); i++){
+                    GlideApp.with(HomeActivity.this)
+                            .load(storage.getReference(iconPaths.get(i)))
+                            .into(imgView.get(i));
+                }
             }
 
             @Override

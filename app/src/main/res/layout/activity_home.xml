@@ -29,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageView
         android:id="@+id/homeButton2"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -39,7 +39,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:scaleType="fitCenter"/>
 
-    <Button
+    <ImageView
         android:id="@+id/homeButton3"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -52,7 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/homeButton1"
         android:scaleType="fitCenter" />
 
-    <Button
+    <ImageView
         android:id="@+id/homeButton4"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -62,7 +62,7 @@
         app:layout_constraintTop_toBottomOf="@+id/homeButton2"
         android:scaleType="fitCenter" />
 
-    <Button
+    <ImageView
         android:id="@+id/homeButton5"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -75,7 +75,7 @@
         app:layout_constraintTop_toBottomOf="@+id/homeButton3"
         android:scaleType="fitCenter" />
 
-    <Button
+    <ImageView
         android:id="@+id/homeButton6"
         android:layout_width="100dp"
         android:layout_height="100dp"

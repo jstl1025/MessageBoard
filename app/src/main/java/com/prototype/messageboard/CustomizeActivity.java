@@ -3,6 +3,7 @@ package com.prototype.messageboard;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
@@ -20,6 +21,12 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
@@ -30,17 +37,20 @@ public class CustomizeActivity extends NavigationDrawer implements FloatingActio
 
     private ArrayList<FloatingActionMenu> menus;
     private FloatingActionMenu currentMenu;
-    int[] customizeIds = {R.id.customizeButton1,
+    private int[] customizeIds = {R.id.customizeButton1,
                     R.id.customizeButton2,
                     R.id.customizeButton3,
                     R.id.customizeButton4,
                     R.id.customizeButton5,
                     R.id.customizeButton6};
+    private ArrayList<ImageView> imgView;
     private CustomizeTxtPopup customizeTxtPopup;
     int pos;
-    ImageView customBtn;
+    private ImageView customBtn;
     static final int PICK_ICON_REQUEST = 1;
     private FirebaseStorage storage;
+    private DatabaseReference ref;
+    private ValueEventListener mIconListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +68,15 @@ public class CustomizeActivity extends NavigationDrawer implements FloatingActio
         customizeTxtPopup = new CustomizeTxtPopup(this);
         mDrawerLayout.addView(contentView, 0);
 
+        ref = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         storage = FirebaseStorage.getInstance();
 
-        menus = new ArrayList<FloatingActionMenu>();
+        menus = new ArrayList<>();
+        imgView = new ArrayList<>();
 
         for (int i=0; i<6; i++){
             ImageView img = findViewById(customizeIds[i]);
+            imgView.add(img);
             TextView custom_txt = new TextView(this); custom_txt.setId(R.id.custom_txt); custom_txt.setText("Text"); custom_txt.setBackgroundResource(android.R.drawable.btn_default_small);
             TextView custom_img = new TextView(this); custom_img.setId(R.id.custom_img); custom_img.setText("Image"); custom_img.setBackgroundResource(android.R.drawable.btn_default_small);
             TextView custom_def = new TextView(this); custom_def.setId(R.id.custom_def); custom_def.setText("Default"); custom_def.setBackgroundResource(android.R.drawable.btn_default_small);
@@ -98,6 +111,43 @@ public class CustomizeActivity extends NavigationDrawer implements FloatingActio
                     .build();
 
             menus.add(actionMenu);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        ValueEventListener iconListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                ArrayList<String> iconPaths = user.getIconPaths();
+
+                for(int i = 0; i<iconPaths.size(); i++){
+                    GlideApp.with(CustomizeActivity.this)
+                            .load(storage.getReference(iconPaths.get(i)))
+                            .into(imgView.get(i));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        ref.addValueEventListener(iconListener);
+
+        //keep a copy of iconListener to remove when app stops
+        mIconListener = iconListener;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //remove icon listener
+        if(mIconListener!=null){
+            ref.removeEventListener(mIconListener);
         }
     }
 

@@ -65,7 +65,7 @@ public class CustomizeIconActivity extends AppCompatActivity implements View.OnC
                 User user = dataSnapshot.getValue(User.class);
                 iconsPaths = user.getIconPaths();
 
-                storageRef = new ArrayList<StorageReference>();
+                storageRef = new ArrayList<>();
                 for(String pathStr : iconsPaths){
                     storageRef.add(storage.getReference(pathStr));
                 }
