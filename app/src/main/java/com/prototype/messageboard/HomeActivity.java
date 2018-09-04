@@ -7,11 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -20,7 +17,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -85,11 +81,11 @@ public class HomeActivity extends NavigationDrawer implements View.OnClickListen
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                ArrayList<String> iconPaths = user.getIconPaths();
+                ArrayList<String> iconInUse = user.getIconInUse();
 
-                for(int i = 0; i<iconPaths.size(); i++){
+                for(int i = 0; i<iconInUse.size(); i++){
                     GlideApp.with(HomeActivity.this)
-                            .load(storage.getReference(iconPaths.get(i)))
+                            .load(storage.getReference(iconInUse.get(i)))
                             .into(imgView.get(i));
                 }
             }

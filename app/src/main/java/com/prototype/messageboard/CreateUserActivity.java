@@ -133,12 +133,17 @@ public class CreateUserActivity extends LoadingDialog {
 
     private void createNewUser(FirebaseUser newUser){
         String userId = newUser.getUid();
-        ArrayList<String> iconPaths = new ArrayList<String>();
-        iconPaths.add("dIcons/emo1.png");
-        iconPaths.add("dIcons/emo2.png");
-        iconPaths.add("dIcons/emo3.png");
+        ArrayList<String> iconInUse = new ArrayList<String>();
+        iconInUse.add("dIcons/emo1.png");
+        iconInUse.add("dIcons/emo2.png");
+        iconInUse.add("dIcons/emo3.png");
 
-        User user = new User(userName, newUser.getEmail(), hint,iconPaths);
+        ArrayList<String> iconWaiting = new ArrayList<>();
+        iconWaiting.add("dIcons/txt1.png");
+        iconWaiting.add("dIcons/txt2.png");
+        iconWaiting.add("dIcons/txt3.png");
+
+        User user = new User(userName, newUser.getEmail(), hint,iconInUse,iconWaiting);
 
         mDatabase.child("users").child(userId).setValue(user);
 

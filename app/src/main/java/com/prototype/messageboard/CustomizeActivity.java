@@ -4,20 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +44,7 @@ public class CustomizeActivity extends NavigationDrawer implements FloatingActio
     private FirebaseStorage storage;
     private DatabaseReference ref;
     private ValueEventListener mIconListener;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,12 +115,12 @@ public class CustomizeActivity extends NavigationDrawer implements FloatingActio
         ValueEventListener iconListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                ArrayList<String> iconPaths = user.getIconPaths();
+                user = dataSnapshot.getValue(User.class);
+                ArrayList<String> iconInUse = user.getIconInUse();
 
-                for(int i = 0; i<iconPaths.size(); i++){
+                for(int i = 0; i<iconInUse.size(); i++){
                     GlideApp.with(CustomizeActivity.this)
-                            .load(storage.getReference(iconPaths.get(i)))
+                            .load(storage.getReference(iconInUse.get(i)))
                             .into(imgView.get(i));
                 }
             }
@@ -201,9 +195,28 @@ public class CustomizeActivity extends NavigationDrawer implements FloatingActio
 
         if(requestCode == PICK_ICON_REQUEST){
             if(resultCode == Activity.RESULT_OK){
-                String iconPath = data.getStringExtra("iconPath");
-                GlideApp.with(this).load(storage.getReference(iconPath)).into(customBtn);
+                /*String iconWaiting = data.getStringExtra("iconWaiting");*/
+                int iconWaitingPos = data.getIntExtra("iconWaitingPos",-1);
+                swapIconXArray(pos,iconWaitingPos);
+                /*GlideApp.with(this).load(storage.getReference(iconWaiting)).into(customBtn);*/
             }
+        }
+    }
+
+    private void swapIconXArray(int pos, int iconWaitingPos) {
+        ArrayList<String> iconInUse = user.getIconInUse();
+        ArrayList<String> iconWaiting = user.getIconWaiting();
+
+        if (pos < iconInUse.size()) {       //Currently set to swap only 3 icons
+            String temp = iconInUse.get(pos);
+            iconInUse.set(pos, iconWaiting.get(iconWaitingPos));
+            iconWaiting.set(iconWaitingPos, temp);
+            user.setIconInUse(iconInUse);
+            user.setIconWaiting(iconWaiting);
+/*        System.out.println("sss"+iconInUse);
+        System.out.println("sss"+iconWaiting);*/
+            ref.child("iconInUse").setValue(iconInUse);
+            ref.child("iconWaiting").setValue(iconWaiting);
         }
     }
 }

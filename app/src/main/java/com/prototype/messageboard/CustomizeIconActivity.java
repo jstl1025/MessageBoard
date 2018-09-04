@@ -35,7 +35,7 @@ public class CustomizeIconActivity extends AppCompatActivity implements View.OnC
     private boolean selected = false;
     private View selectedView;
     private ArrayList<StorageReference> storageRef;
-    private ArrayList<String> iconsPaths;
+    private ArrayList<String> iconWaiting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +63,10 @@ public class CustomizeIconActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                iconsPaths = user.getIconPaths();
+                iconWaiting = user.getIconWaiting();
 
                 storageRef = new ArrayList<>();
-                for(String pathStr : iconsPaths){
+                for(String pathStr : iconWaiting){
                     storageRef.add(storage.getReference(pathStr));
                 }
                 System.out.println("here "+storageRef);
@@ -130,7 +130,8 @@ public class CustomizeIconActivity extends AppCompatActivity implements View.OnC
             case R.id.confirmSelect: //if no icon selected
                 if(selected){
                     returnIntent = new Intent();
-                    returnIntent.putExtra("iconPath",iconsPaths.get(selectedPos));
+                    returnIntent.putExtra("iconWaiting", iconWaiting.get(selectedPos));
+                    returnIntent.putExtra("iconWaitingPos",selectedPos);
                     setResult(Activity.RESULT_OK,returnIntent);
                     finish();
                 }
